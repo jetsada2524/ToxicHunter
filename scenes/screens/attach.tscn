@@ -1,0 +1,77 @@
+[gd_scene load_steps=5 format=3]
+
+[ext_resource type="Script" path="res://scripts/attach.gd" id="1_attach"]
+[ext_resource type="Texture2D" path="res://assets/ui/attach_clear_bg.png" id="2_bg"]
+[ext_resource type="Script" path="res://scripts/components/glossy_button.gd" id="3_btn"]
+[ext_resource type="Script" path="res://scripts/components/pill_toggle.gd" id="4_pill"]
+
+[node name="Attach" type="Control"]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("1_attach")
+
+[node name="Background" type="TextureRect" parent="."]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+texture = ExtResource("2_bg")
+expand_mode = 1
+stretch_mode = 6
+
+[node name="StartButton" type="Control" parent="."]
+layout_mode = 1
+anchor_left = 0.5
+anchor_top = 0.83
+anchor_right = 0.5
+anchor_bottom = 0.83
+offset_left = -348.0
+offset_top = -94.0
+offset_right = 348.0
+offset_bottom = 94.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("3_btn")
+text = "ไปเลือกสถานที่"
+color = Color(0.42, 0.78, 0.18, 1)
+font_size = 77
+rim_width = 12
+rim_color = Color(0.867, 0.89, 0.91, 1)
+pulse = true
+hover_scale = 1.06
+
+[node name="AudioToggles" type="HBoxContainer" parent="."]
+layout_mode = 1
+anchors_preset = 1
+anchor_left = 1.0
+anchor_right = 1.0
+offset_left = -343.0
+offset_top = 29.0
+offset_right = -29.0
+offset_bottom = 83.0
+grow_horizontal = 0
+theme_override_constants/separation = 12
+alignment = 2
+
+[node name="BgmToggle" type="Button" parent="AudioToggles"]
+custom_minimum_size = Vector2(151, 54)
+layout_mode = 2
+theme_override_font_sizes/font_size = 25
+script = ExtResource("4_pill")
+label = "BGM"
+color = Color(0.82, 0.29, 0.77, 1)
+
+[node name="SfxToggle" type="Button" parent="AudioToggles"]
+custom_minimum_size = Vector2(151, 54)
+layout_mode = 2
+theme_override_font_sizes/font_size = 25
+script = ExtResource("4_pill")
+label = "SFX"
+color = Color(0.4, 0.82, 0.91, 1)

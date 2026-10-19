@@ -1,0 +1,73 @@
+# Build the Godot web export and publish it on GitHub Pages.
+# Runs on every push to main (and by hand from the Actions tab).
+# One-time setup on GitHub: Settings > Pages > Source = "GitHub Actions".
+name: Deploy web build to GitHub Pages
+
+on:
+  push:
+    branches: [main]
+  workflow_dispatch:
+
+permissions:
+  contents: read
+  pages: write
+  id-token: write
+
+concurrency:
+  group: pages
+  cancel-in-progress: true
+
+env:
+  GODOT_VERSION: "4.7"
+  GODOT_RELEASE: "stable"
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Install Godot + web export template
+        run: |
+          base="https://github.com/godotengine/godot/releases/download/${GODOT_VERSION}-${GODOT_RELEASE}"
+          curl -sSL -o godot.zip "$base/Godot_v${GODOT_VERSION}-${GODOT_RELEASE}_linux.x86_64.zip"
+          unzip -q godot.zip && mv Godot_v*_linux.x86_64 godot && chmod +x godot
+          curl -sSL -o templates.tpz "$base/Godot_v${GODOT_VERSION}-${GODOT_RELEASE}_export_templates.tpz"
+          dir="$HOME/.local/share/godot/export_templates/${GODOT_VERSION}.${GODOT_RELEASE}"
+          mkdir -p "$dir"
+          unzip -q -j templates.tpz 'templates/web_nothreads_release.zip' 'templates/web_nothreads_debug.zip' 'templates/version.txt' -d "$dir"
+          rm templates.tpz
+
+      - name: Smaller textures for the web
+        # The desktop builds keep lossless textures. For the browser download
+        # every texture is switched to lossy WebP (about 6x smaller pck).
+        run: |
+          find assets fonts -name '*.import' -exec sed -i \
+            -e 's/^compress\/mode=0$/compress\/mode=1/' \
+            -e 's/^compress\/lossy_quality=.*/compress\/lossy_quality=0.8/' {} +
+
+      - name: Import assets
+        run: ./godot --headless --path . --import || true
+
+      - name: Export web build
+        run: |
+          mkdir -p build/web
+          ./godot --headless --path . --export-release "Web" build/web/index.html
+          test -f build/web/index.pck
+          # GitHub Pages serves .nojekyll sites as-is
+          touch build/web/.nojekyll
+          ls -la build/web
+
+      - uses: actions/upload-pages-artifact@v3
+        with:
+          path: build/web
+
+  deploy:
+    needs: build
+    runs-on: ubuntu-latest
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+    steps:
+      - id: deployment
+        uses: actions/deploy-pages@v4

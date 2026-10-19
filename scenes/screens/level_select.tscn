@@ -1,0 +1,88 @@
+[gd_scene load_steps=5 format=3]
+
+[ext_resource type="Script" path="res://scripts/level_select.gd" id="1_ls"]
+[ext_resource type="Texture2D" path="res://assets/ui/select_mission_bg.png" id="2_bg"]
+[ext_resource type="FontFile" path="res://fonts/Itim/Itim-Regular.ttf" id="3_itim"]
+
+[sub_resource type="FontVariation" id="FontVariation_bold"]
+base_font = ExtResource("3_itim")
+variation_embolden = 0.4
+
+[node name="LevelSelect" type="Control"]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("1_ls")
+
+[node name="Background" type="TextureRect" parent="."]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+texture = ExtResource("2_bg")
+expand_mode = 1
+stretch_mode = 6
+
+[node name="Header" type="VBoxContainer" parent="."]
+layout_mode = 1
+anchors_preset = 10
+anchor_right = 1.0
+offset_top = 17.0
+offset_bottom = 257.0
+grow_horizontal = 2
+mouse_filter = 2
+theme_override_constants/separation = -12
+
+[node name="BrandLabel" type="Label" parent="Header"]
+layout_mode = 2
+theme_override_colors/font_color = Color(1, 0.84, 0.3, 1)
+theme_override_colors/font_outline_color = Color(0.45, 0.27, 0.06, 1)
+theme_override_colors/font_shadow_color = Color(0.1, 0.2, 0.05, 0.35)
+theme_override_constants/outline_size = 14
+theme_override_constants/shadow_offset_y = 4
+theme_override_fonts/font = SubResource("FontVariation_bold")
+theme_override_font_sizes/font_size = 55
+text = "ToxicHunter — นักสืบสารพิษ"
+horizontal_alignment = 1
+
+[node name="TitleLabel" type="Label" parent="Header"]
+layout_mode = 2
+theme_override_colors/font_color = Color(1, 1, 1, 1)
+theme_override_colors/font_outline_color = Color(0.2, 0.36, 0.16, 1)
+theme_override_colors/font_shadow_color = Color(0.08, 0.2, 0.05, 0.4)
+theme_override_constants/outline_size = 24
+theme_override_constants/shadow_offset_y = 6
+theme_override_fonts/font = SubResource("FontVariation_bold")
+theme_override_font_sizes/font_size = 106
+text = "CHOOSE YOUR MYSTERY!"
+horizontal_alignment = 1
+
+[node name="SubtitleLabel" type="Label" parent="Header"]
+layout_mode = 2
+theme_override_colors/font_color = Color(1, 1, 1, 1)
+theme_override_colors/font_outline_color = Color(0.2, 0.36, 0.16, 1)
+theme_override_constants/outline_size = 14
+theme_override_fonts/font = SubResource("FontVariation_bold")
+theme_override_font_sizes/font_size = 41
+text = "เลือกสถานที่ แล้วออกตามล่าของอันตราย!"
+horizontal_alignment = 1
+
+[node name="Cards" type="HBoxContainer" parent="."]
+layout_mode = 1
+anchors_preset = 5
+anchor_left = 0.5
+anchor_right = 0.5
+offset_left = -912.0
+offset_top = 283.0
+offset_right = 912.0
+offset_bottom = 895.0
+grow_horizontal = 2
+mouse_filter = 2
+theme_override_constants/separation = 36
+alignment = 1

@@ -1,0 +1,222 @@
+[gd_scene load_steps=11 format=3]
+
+[ext_resource type="Script" path="res://scripts/components/level_card.gd" id="1_card"]
+[ext_resource type="Script" path="res://scripts/components/glossy_button.gd" id="2_btn"]
+[ext_resource type="FontFile" path="res://fonts/Itim/Itim-Regular.ttf" id="3_itim"]
+
+[sub_resource type="FontVariation" id="FontVariation_bold"]
+base_font = ExtResource("3_itim")
+variation_embolden = 0.35
+
+[sub_resource type="StyleBoxFlat" id="StyleBox_mask"]
+corner_radius_top_left = 36
+corner_radius_top_right = 36
+corner_radius_bottom_right = 36
+corner_radius_bottom_left = 36
+
+[sub_resource type="Gradient" id="Gradient_fade"]
+offsets = PackedFloat32Array(0, 0.4, 1)
+colors = PackedColorArray(1, 1, 1, 0.15, 1, 0.99, 0.95, 0.55, 1, 0.98, 0.92, 0.9)
+
+[sub_resource type="GradientTexture2D" id="GradientTexture2D_fade"]
+gradient = SubResource("Gradient_fade")
+width = 8
+height = 128
+fill_to = Vector2(0, 1)
+
+[sub_resource type="StyleBoxFlat" id="StyleBox_sheen"]
+bg_color = Color(1, 1, 1, 0.45)
+corner_radius_top_left = 31
+corner_radius_top_right = 72
+corner_radius_bottom_right = 72
+corner_radius_bottom_left = 10
+
+[sub_resource type="StyleBoxFlat" id="StyleBox_artmask"]
+corner_radius_top_left = 18
+corner_radius_top_right = 18
+corner_radius_bottom_right = 18
+corner_radius_bottom_left = 18
+
+[node name="LevelCard" type="Control"]
+custom_minimum_size = Vector2(326, 612)
+layout_mode = 3
+anchors_preset = 0
+offset_right = 326.0
+offset_bottom = 612.0
+script = ExtResource("1_card")
+
+[node name="Frame" type="Panel" parent="."]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+
+[node name="Clip" type="Panel" parent="."]
+clip_children = 1
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+theme_override_styles/panel = SubResource("StyleBox_mask")
+
+[node name="Fade" type="TextureRect" parent="Clip"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+texture = SubResource("GradientTexture2D_fade")
+expand_mode = 1
+
+[node name="Sheen" type="Panel" parent="Clip"]
+layout_mode = 0
+offset_left = 17.0
+offset_top = 12.0
+offset_right = 144.0
+offset_bottom = 31.0
+mouse_filter = 2
+theme_override_styles/panel = SubResource("StyleBox_sheen")
+
+[node name="Border" type="Panel" parent="."]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+
+[node name="Content" type="MarginContainer" parent="."]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+theme_override_constants/margin_left = 22
+theme_override_constants/margin_top = 17
+theme_override_constants/margin_right = 22
+theme_override_constants/margin_bottom = 24
+
+[node name="VBox" type="VBoxContainer" parent="Content"]
+layout_mode = 2
+mouse_filter = 2
+theme_override_constants/separation = 5
+
+[node name="NameLabel" type="Label" parent="Content/VBox"]
+unique_name_in_owner = true
+layout_mode = 2
+theme_override_colors/font_color = Color(0.17, 0.33, 0.55, 1)
+theme_override_colors/font_outline_color = Color(1, 1, 1, 1)
+theme_override_constants/outline_size = 14
+theme_override_fonts/font = SubResource("FontVariation_bold")
+theme_override_font_sizes/font_size = 55
+text = "ชื่อสถานที่"
+horizontal_alignment = 1
+
+[node name="Stars" type="HBoxContainer" parent="Content/VBox"]
+unique_name_in_owner = true
+layout_mode = 2
+theme_override_constants/separation = 2
+alignment = 1
+
+[node name="Star1" type="Label" parent="Content/VBox/Stars"]
+layout_mode = 2
+theme_override_constants/outline_size = 7
+theme_override_font_sizes/font_size = 46
+text = "★"
+
+[node name="Star2" type="Label" parent="Content/VBox/Stars"]
+layout_mode = 2
+theme_override_constants/outline_size = 7
+theme_override_font_sizes/font_size = 46
+text = "★"
+
+[node name="Star3" type="Label" parent="Content/VBox/Stars"]
+layout_mode = 2
+theme_override_constants/outline_size = 7
+theme_override_font_sizes/font_size = 46
+text = "★"
+
+[node name="Star4" type="Label" parent="Content/VBox/Stars"]
+layout_mode = 2
+theme_override_constants/outline_size = 7
+theme_override_font_sizes/font_size = 46
+text = "★"
+
+[node name="Star5" type="Label" parent="Content/VBox/Stars"]
+layout_mode = 2
+theme_override_constants/outline_size = 7
+theme_override_font_sizes/font_size = 46
+text = "★"
+
+[node name="Thumb" type="PanelContainer" parent="Content/VBox"]
+unique_name_in_owner = true
+custom_minimum_size = Vector2(0, 214)
+layout_mode = 2
+mouse_filter = 2
+
+[node name="ArtMask" type="Panel" parent="Content/VBox/Thumb"]
+clip_children = 1
+layout_mode = 2
+mouse_filter = 2
+theme_override_styles/panel = SubResource("StyleBox_artmask")
+
+[node name="Art" type="TextureRect" parent="Content/VBox/Thumb/ArtMask"]
+unique_name_in_owner = true
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+expand_mode = 1
+stretch_mode = 6
+
+[node name="Gap" type="Control" parent="Content/VBox"]
+custom_minimum_size = Vector2(0, 7)
+layout_mode = 2
+mouse_filter = 2
+
+[node name="InfoLabel" type="Label" parent="Content/VBox"]
+unique_name_in_owner = true
+layout_mode = 2
+theme_override_colors/font_color = Color(0.17, 0.23, 0.29, 1)
+theme_override_font_sizes/font_size = 25
+text = "🏠 3 ห้อง   ⚠ 3 ชิ้น   ⏱ 2:00"
+horizontal_alignment = 1
+
+[node name="SubtitleLabel" type="Label" parent="Content/VBox"]
+unique_name_in_owner = true
+layout_mode = 2
+theme_override_colors/font_color = Color(0.17, 0.23, 0.29, 1)
+theme_override_font_sizes/font_size = 28
+text = "คำอธิบายสถานที่"
+horizontal_alignment = 1
+autowrap_mode = 3
+
+[node name="Spacer" type="Control" parent="Content/VBox"]
+layout_mode = 2
+size_flags_vertical = 3
+mouse_filter = 2
+
+[node name="StartButton" type="Control" parent="Content/VBox"]
+unique_name_in_owner = true
+custom_minimum_size = Vector2(278, 98)
+layout_mode = 2
+size_flags_horizontal = 4
+script = ExtResource("2_btn")
+text = "เริ่มสืบ"
+color = Color(0.3, 0.6, 0.9, 1)
+font_size = 50
+rim_width = 6

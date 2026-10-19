@@ -1,0 +1,236 @@
+[gd_scene load_steps=5 format=3]
+
+[ext_resource type="Script" path="res://scripts/summary.gd" id="1_sum"]
+[ext_resource type="Texture2D" path="res://assets/ui/result_bg.png" id="2_bg"]
+[ext_resource type="FontFile" path="res://fonts/Itim/Itim-Regular.ttf" id="4_itim"]
+
+[sub_resource type="FontVariation" id="FontVariation_bold"]
+base_font = ExtResource("4_itim")
+variation_embolden = 0.4
+
+[node name="Summary" type="Control"]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("1_sum")
+
+[node name="Background" type="TextureRect" parent="."]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+texture = ExtResource("2_bg")
+expand_mode = 1
+stretch_mode = 6
+
+[node name="Confetti" type="CPUParticles2D" parent="."]
+position = Vector2(960, -30)
+emitting = false
+amount = 180
+lifetime = 7.0
+preprocess = 2.0
+emission_shape = 3
+emission_rect_extents = Vector2(980, 10)
+direction = Vector2(0, 1)
+spread = 25.0
+gravity = Vector2(0, 160)
+initial_velocity_min = 60.0
+initial_velocity_max = 170.0
+angular_velocity_min = -280.0
+angular_velocity_max = 280.0
+angle_min = -180.0
+angle_max = 180.0
+scale_amount_min = 0.7
+scale_amount_max = 1.4
+
+[node name="Bubble" type="Control" parent="."]
+unique_name_in_owner = true
+layout_mode = 0
+offset_left = 60.0
+offset_top = 34.0
+offset_right = 700.0
+offset_bottom = 230.0
+mouse_filter = 2
+
+[node name="Tail" type="Polygon2D" parent="Bubble"]
+unique_name_in_owner = true
+color = Color(1, 1, 1, 1)
+polygon = PackedVector2Array(250, 184, 340, 184, 345, 236)
+
+[node name="TailEdge" type="Line2D" parent="Bubble"]
+unique_name_in_owner = true
+points = PackedVector2Array(250, 186, 345, 236, 340, 186)
+width = 6.0
+default_color = Color(0.94, 0.66, 0.24, 1)
+joint_mode = 2
+
+[node name="BubblePanel" type="Panel" parent="Bubble"]
+unique_name_in_owner = true
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+
+[node name="BubbleLabel" type="Label" parent="Bubble"]
+unique_name_in_owner = true
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = 24.0
+offset_top = 14.0
+offset_right = -24.0
+offset_bottom = -18.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_colors/font_color = Color(0.17, 0.23, 0.29, 1)
+theme_override_fonts/font = SubResource("FontVariation_bold")
+theme_override_font_sizes/font_size = 34
+text = "เก่งมากเลย!"
+horizontal_alignment = 1
+vertical_alignment = 1
+autowrap_mode = 3
+
+[node name="Box" type="Control" parent="."]
+unique_name_in_owner = true
+layout_mode = 0
+offset_left = 790.0
+offset_top = 60.0
+offset_right = 1870.0
+offset_bottom = 1020.0
+mouse_filter = 2
+
+[node name="BoxArt" type="TextureRect" parent="Box"]
+unique_name_in_owner = true
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+expand_mode = 1
+
+[node name="TitleLabel" type="Label" parent="Box"]
+unique_name_in_owner = true
+layout_mode = 1
+anchor_left = 0.27
+anchor_top = 0.09
+anchor_right = 0.8
+anchor_bottom = 0.225
+theme_override_colors/font_color = Color(1, 1, 1, 1)
+theme_override_colors/font_outline_color = Color(0.16, 0.36, 0.14, 1)
+theme_override_constants/outline_size = 14
+theme_override_fonts/font = SubResource("FontVariation_bold")
+theme_override_font_sizes/font_size = 62
+text = "ไขคดีสำเร็จ!"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="Content" type="VBoxContainer" parent="Box"]
+unique_name_in_owner = true
+layout_mode = 1
+anchor_left = 0.09
+anchor_top = 0.235
+anchor_right = 0.91
+anchor_bottom = 0.795
+mouse_filter = 2
+theme_override_constants/separation = 2
+alignment = 1
+
+[node name="Items" type="HBoxContainer" parent="Box/Content"]
+unique_name_in_owner = true
+layout_mode = 2
+mouse_filter = 2
+theme_override_constants/separation = 26
+alignment = 1
+
+[node name="ScoreLabel" type="RichTextLabel" parent="Box/Content"]
+unique_name_in_owner = true
+layout_mode = 2
+mouse_filter = 2
+theme_override_colors/font_outline_color = Color(1, 1, 1, 1)
+theme_override_constants/outline_size = 14
+theme_override_fonts/normal_font = SubResource("FontVariation_bold")
+theme_override_font_sizes/normal_font_size = 84
+bbcode_enabled = true
+text = "[center]0 คะแนน![/center]"
+fit_content = true
+scroll_active = false
+autowrap_mode = 0
+
+[node name="ScoreCaption" type="Label" parent="Box/Content"]
+unique_name_in_owner = true
+layout_mode = 2
+theme_override_colors/font_color = Color(0.4, 0.45, 0.5, 1)
+theme_override_font_sizes/font_size = 26
+text = "คะแนนรวม"
+horizontal_alignment = 1
+
+[node name="Breakdown" type="Label" parent="Box/Content"]
+unique_name_in_owner = true
+layout_mode = 2
+theme_override_colors/font_color = Color(0.17, 0.23, 0.29, 1)
+theme_override_font_sizes/font_size = 25
+text = "คะแนนจากการสืบ 0  ·  โบนัสเวลา +0"
+horizontal_alignment = 1
+
+[node name="Stars" type="HBoxContainer" parent="Box/Content"]
+unique_name_in_owner = true
+layout_mode = 2
+mouse_filter = 2
+theme_override_constants/separation = 8
+alignment = 1
+
+[node name="RatingCaption" type="Label" parent="Box/Content"]
+unique_name_in_owner = true
+layout_mode = 2
+theme_override_colors/font_color = Color(0.4, 0.45, 0.5, 1)
+theme_override_font_sizes/font_size = 26
+text = "ระดับนักสืบ"
+horizontal_alignment = 1
+
+[node name="ReplayButton" type="Button" parent="Box"]
+unique_name_in_owner = true
+layout_mode = 1
+anchor_left = 0.155
+anchor_top = 0.807
+anchor_right = 0.498
+anchor_bottom = 0.906
+focus_mode = 0
+mouse_default_cursor_shape = 2
+theme_override_colors/font_color = Color(1, 1, 1, 1)
+theme_override_colors/font_hover_color = Color(1, 1, 1, 1)
+theme_override_colors/font_pressed_color = Color(1, 1, 1, 1)
+theme_override_colors/font_outline_color = Color(0.55, 0.25, 0.04, 1)
+theme_override_constants/outline_size = 10
+theme_override_fonts/font = SubResource("FontVariation_bold")
+theme_override_font_sizes/font_size = 44
+text = "เล่นอีกครั้ง"
+
+[node name="MenuButton" type="Button" parent="Box"]
+unique_name_in_owner = true
+layout_mode = 1
+anchor_left = 0.525
+anchor_top = 0.807
+anchor_right = 0.862
+anchor_bottom = 0.906
+focus_mode = 0
+mouse_default_cursor_shape = 2
+theme_override_colors/font_color = Color(1, 1, 1, 1)
+theme_override_colors/font_hover_color = Color(1, 1, 1, 1)
+theme_override_colors/font_pressed_color = Color(1, 1, 1, 1)
+theme_override_colors/font_outline_color = Color(0.08, 0.27, 0.5, 1)
+theme_override_constants/outline_size = 10
+theme_override_fonts/font = SubResource("FontVariation_bold")
+theme_override_font_sizes/font_size = 44
+text = "เลือกด่านใหม่"

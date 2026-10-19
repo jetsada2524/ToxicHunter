@@ -1,0 +1,11 @@
+# Godot cache / build output
+.godot/
+build/
+*.tmp
+
+# macOS
+.DS_Store
+
+# dev-only captures and source art (large, not needed to build the game)
+tools/screenshots/
+assets/ui/_raw/

@@ -1,0 +1,287 @@
+[gd_scene format=3 uid="uid://clc3v34xcysba"]
+
+[ext_resource type="Script" uid="uid://cyxdoqhftne6s" path="res://scripts/components/play_hud.gd" id="1_hud"]
+[ext_resource type="Script" uid="uid://00odu0a0sum8" path="res://scripts/components/clock_icon.gd" id="2_clock"]
+
+[sub_resource type="Gradient" id="Gradient_rainbow"]
+offsets = PackedFloat32Array(0, 0.35, 0.68, 1)
+colors = PackedColorArray(0.31, 0.65, 0.88, 1, 0.42, 0.76, 0.29, 1, 0.94, 0.66, 0.24, 1, 0.91, 0.37, 0.6, 1)
+
+[sub_resource type="GradientTexture2D" id="GradientTexture2D_rainbow"]
+gradient = SubResource("Gradient_rainbow")
+width = 256
+height = 8
+
+[node name="PlayHud" type="Control" unique_id=391483880]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+script = ExtResource("1_hud")
+
+[node name="TimerPill" type="PanelContainer" parent="." unique_id=333960460]
+unique_name_in_owner = true
+layout_mode = 1
+offset_left = 18.0
+offset_top = 16.0
+offset_right = 232.0
+offset_bottom = 83.0
+mouse_filter = 2
+
+[node name="Row" type="HBoxContainer" parent="TimerPill" unique_id=27232102]
+layout_mode = 2
+mouse_filter = 2
+theme_override_constants/separation = 14
+
+[node name="ClockIcon" type="Control" parent="TimerPill/Row" unique_id=1637386915]
+custom_minimum_size = Vector2(53, 53)
+layout_mode = 2
+size_flags_vertical = 4
+mouse_filter = 2
+script = ExtResource("2_clock")
+
+[node name="TimeLabel" type="Label" parent="TimerPill/Row" unique_id=1230452080]
+unique_name_in_owner = true
+layout_mode = 2
+theme_override_colors/font_color = Color(1, 1, 1, 1)
+theme_override_colors/font_outline_color = Color(0.13, 0.17, 0.27, 1)
+theme_override_constants/outline_size = 7
+theme_override_font_sizes/font_size = 43
+text = "02:00"
+vertical_alignment = 1
+
+[node name="QuitButton" type="Button" parent="." unique_id=241145108]
+unique_name_in_owner = true
+layout_mode = 0
+offset_left = 18.0
+offset_top = 16.0
+offset_right = 232.0
+offset_bottom = 83.0
+focus_mode = 0
+mouse_default_cursor_shape = 2
+theme_override_colors/font_color = Color(1, 1, 1, 1)
+theme_override_colors/font_hover_color = Color(1, 1, 1, 1)
+theme_override_colors/font_outline_color = Color(0.45, 0.12, 0.1, 1)
+theme_override_constants/outline_size = 7
+theme_override_font_sizes/font_size = 39
+text = "ออก"
+
+[node name="ScorePill" type="PanelContainer" parent="." unique_id=364296103]
+unique_name_in_owner = true
+layout_mode = 1
+anchors_preset = 1
+anchor_left = 1.0
+anchor_right = 1.0
+offset_left = -311.0
+offset_top = 16.0
+offset_right = -18.0
+offset_bottom = 83.0
+grow_horizontal = 0
+mouse_filter = 2
+
+[node name="Row" type="HBoxContainer" parent="ScorePill" unique_id=188460073]
+layout_mode = 2
+mouse_filter = 2
+theme_override_constants/separation = 12
+alignment = 1
+
+[node name="ScoreLabel" type="Label" parent="ScorePill/Row" unique_id=741059899]
+unique_name_in_owner = true
+layout_mode = 2
+theme_override_colors/font_color = Color(1, 1, 1, 1)
+theme_override_colors/font_outline_color = Color(0.13, 0.17, 0.27, 1)
+theme_override_constants/outline_size = 7
+theme_override_font_sizes/font_size = 39
+text = "คะแนน: 0"
+vertical_alignment = 1
+
+[node name="StarLabel" type="Label" parent="ScorePill/Row" unique_id=789302261]
+unique_name_in_owner = true
+layout_mode = 2
+theme_override_colors/font_color = Color(1, 0.77, 0.19, 1)
+theme_override_colors/font_outline_color = Color(0.6, 0.36, 0.05, 1)
+theme_override_constants/outline_size = 6
+theme_override_font_sizes/font_size = 45
+text = "★"
+vertical_alignment = 1
+
+[node name="PrevNav" type="VBoxContainer" parent="." unique_id=1117879379]
+unique_name_in_owner = true
+layout_mode = 1
+anchors_preset = 2
+anchor_top = 1.0
+anchor_bottom = 1.0
+offset_left = 6.0
+offset_top = -820.0
+offset_right = 262.0
+offset_bottom = -634.0
+grow_vertical = 0
+mouse_filter = 2
+theme_override_constants/separation = 6
+alignment = 2
+
+[node name="PrevArrow" type="TextureButton" parent="PrevNav" unique_id=1962390824]
+unique_name_in_owner = true
+custom_minimum_size = Vector2(90, 90)
+layout_mode = 2
+size_flags_horizontal = 4
+mouse_default_cursor_shape = 2
+ignore_texture_size = true
+stretch_mode = 5
+
+[node name="PrevPlaque" type="PanelContainer" parent="PrevNav" unique_id=579031599]
+unique_name_in_owner = true
+layout_mode = 2
+size_flags_horizontal = 4
+mouse_filter = 2
+
+[node name="PrevLabel" type="Label" parent="PrevNav/PrevPlaque" unique_id=1152992139]
+unique_name_in_owner = true
+layout_mode = 2
+theme_override_colors/font_color = Color(1, 1, 1, 1)
+theme_override_colors/font_outline_color = Color(0.13, 0.17, 0.27, 1)
+theme_override_constants/outline_size = 8
+theme_override_font_sizes/font_size = 34
+text = "ห้องนอน"
+horizontal_alignment = 1
+
+[node name="NextNav" type="VBoxContainer" parent="." unique_id=1244345169]
+unique_name_in_owner = true
+layout_mode = 1
+anchors_preset = 3
+anchor_left = 1.0
+anchor_top = 1.0
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = -258.0
+offset_top = -820.0
+offset_right = -2.0
+offset_bottom = -634.0
+grow_horizontal = 0
+grow_vertical = 0
+mouse_filter = 2
+theme_override_constants/separation = 6
+alignment = 2
+
+[node name="NextArrow" type="TextureButton" parent="NextNav" unique_id=1338687214]
+unique_name_in_owner = true
+custom_minimum_size = Vector2(90, 90)
+layout_mode = 2
+size_flags_horizontal = 4
+mouse_default_cursor_shape = 2
+ignore_texture_size = true
+stretch_mode = 5
+flip_h = true
+
+[node name="NextPlaque" type="PanelContainer" parent="NextNav" unique_id=1645954596]
+unique_name_in_owner = true
+layout_mode = 2
+size_flags_horizontal = 4
+mouse_filter = 2
+
+[node name="NextLabel" type="Label" parent="NextNav/NextPlaque" unique_id=1644359801]
+unique_name_in_owner = true
+layout_mode = 2
+theme_override_colors/font_color = Color(1, 1, 1, 1)
+theme_override_colors/font_outline_color = Color(0.13, 0.17, 0.27, 1)
+theme_override_constants/outline_size = 8
+theme_override_font_sizes/font_size = 34
+text = "ห้องน้ำ"
+horizontal_alignment = 1
+
+[node name="FoundPanel" type="Control" parent="." unique_id=921178773]
+unique_name_in_owner = true
+layout_mode = 1
+anchors_preset = 7
+anchor_left = 0.5
+anchor_top = 1.0
+anchor_right = 0.5
+anchor_bottom = 1.0
+offset_left = -420.0
+offset_top = -178.0
+offset_right = 420.0
+offset_bottom = -14.0
+grow_horizontal = 2
+grow_vertical = 0
+mouse_filter = 2
+
+[node name="FoundFrame" type="Panel" parent="FoundPanel" unique_id=1200549724]
+unique_name_in_owner = true
+clip_children = 1
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_top = 22.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+
+[node name="Rainbow" type="TextureRect" parent="FoundPanel/FoundFrame" unique_id=1559074996]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+texture = SubResource("GradientTexture2D_rainbow")
+expand_mode = 1
+
+[node name="FoundInner" type="Panel" parent="FoundPanel" unique_id=2065390210]
+unique_name_in_owner = true
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = 9.0
+offset_top = 31.0
+offset_right = -9.0
+offset_bottom = -9.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+
+[node name="Slots" type="HBoxContainer" parent="FoundPanel" unique_id=88895420]
+unique_name_in_owner = true
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_top = 50.0
+offset_bottom = -12.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+theme_override_constants/separation = 20
+alignment = 1
+
+[node name="FoundTab" type="PanelContainer" parent="FoundPanel" unique_id=634752519]
+unique_name_in_owner = true
+layout_mode = 1
+anchors_preset = 5
+anchor_left = 0.5
+anchor_right = 0.5
+offset_left = -160.0
+offset_top = -18.0
+offset_right = 160.0
+offset_bottom = 52.0
+grow_horizontal = 2
+mouse_filter = 2
+
+[node name="FoundLabel" type="RichTextLabel" parent="FoundPanel/FoundTab" unique_id=703613141]
+unique_name_in_owner = true
+layout_mode = 2
+mouse_filter = 2
+theme_override_colors/default_color = Color(1, 1, 1, 1)
+theme_override_colors/font_outline_color = Color(0.13, 0.17, 0.27, 1)
+theme_override_constants/outline_size = 8
+theme_override_font_sizes/normal_font_size = 44
+bbcode_enabled = true
+text = "[center]ค้นพบ 0/0[/center]"
+fit_content = true
+scroll_active = false
+autowrap_mode = 0
