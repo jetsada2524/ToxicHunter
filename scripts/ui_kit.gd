@@ -126,6 +126,80 @@ static func button(text: String, tint: Color, w := 0, h := 62, fs := 24) -> Butt
     return b
 
 
+## Thai line-break fix. Godot's Thai dictionary does not know many loanwords
+## and chemical names, so AUTOWRAP can split them mid-word ("ส|เปรย์",
+## "เจ|ล", "กระ|ป๋อ|ง"). th() glues each word in NOBREAK_TH together with an
+## invisible WORD JOINER (U+2060) between its characters (never in front of a
+## vowel/tone mark, so shaping is unchanged), and keeps "ๆ" on the same line as
+## the word before it. Run any Thai text that can wrap through Ui.th().
+## Add a word here when a new one is found splitting wrongly.
+const NOBREAK_TH: Array[String] = [
+    "สเปรย์", "เจล", "กระป๋อง", "สแตนเลส", "เบกกิ้ง", "โซดา", "ทินเนอร์",
+    "โซเดียม", "โพแทสเซียม", "แอมโมเนีย", "คลอรีน", "บลีช", "ลาเท็กซ์",
+    "ไฮโปคลอไรต์", "คลอไรด์", "ไฮดรอกไซด์", "ไบคาร์บอเนต", "ฟลูออไรด์",
+    "ซัลฟิวริก", "ฟอสฟอริก", "ไซยาไนด์", "เอทานอล", "เอทิลีน", "ไกลคอล",
+    "ไซลีน", "โทลูอีน", "แนฟทาลีน", "ไพรีทรอยด์", "ไซเปอร์เมทริน",
+    "ฟิโพรนิล", "ออร์กาโนฟอสเฟต", "ฟอสเฟต", "ไนเตรต", "คาร์บาเมต",
+    "ไกลโฟเซต", "โบรดิฟาคูม", "อะลัมิเนียม", "ซัลเฟต", "ทัลคัม", "ปะเก็น",
+    "ซิลิโคน", "อินทรียวัตถุ", "เป็นกลาง", "ติ๊ง", "สครับ", "แอลกอฮอล์", "พลาสติก",
+    "เคมี", "แบตเตอรี่", "เทฟลอน", "ฟอร์มาลีน", "อะซิโตน", "เมทานอล",
+]
+const _WJ := "\u2060"
+static var _th_pairs: Array = []
+
+
+static func th(text: String) -> String:
+    if _th_pairs.is_empty():
+        var words := NOBREAK_TH.duplicate()
+        words.sort_custom(func(a, b): return a.length() > b.length())
+        for w: String in words:
+            var glued: String = ""
+            for i in w.length():
+                var c: int = w.unicode_at(i)
+                # no joiner before combining vowels / tone marks (U+0E31, U+0E34-0E3A, U+0E47-0E4E)
+                if i > 0 and not (c == 0x0E31 or (c >= 0x0E34 and c <= 0x0E3A) or (c >= 0x0E47 and c <= 0x0E4E)):
+                    glued += _WJ
+                glued += w[i]
+            _th_pairs.append([w, glued])
+    var out := text
+    for p in _th_pairs:
+        if out.contains(p[0]):
+            out = _glue(out, p[0], p[1])
+    # longer words were glued first; a shorter word inside one is already joined
+    out = out.replace(" ๆ", "\u00A0ๆ")
+    return out
+
+
+## Replace every `word` with `glued`, and put a ZERO WIDTH SPACE (U+200B) on
+## any side that touches another Thai letter: once a word is glued the Thai
+## dictionary can no longer see where it ends, so without this "โซเดียม" +
+## "ไซยาไนด์" would become one unbreakable run and split by letter ("...ไน|ด์").
+static func _glue(text: String, word: String, glued: String) -> String:
+    var out := ""
+    var from := 0
+    var at := text.find(word)
+    while at >= 0:
+        out += text.substr(from, at - from)
+        var piece := glued
+        if at > 0 and _is_thai_letter(text.unicode_at(at - 1)):
+            piece = "\u200B" + piece
+        var end := at + word.length()
+        if end < text.length() and _is_thai_letter(text.unicode_at(end)) and not _is_thai_mark(text.unicode_at(end)):
+            piece += "\u200B"
+        out += piece
+        from = end
+        at = text.find(word, from)
+    return out + text.substr(from)
+
+
+static func _is_thai_letter(c: int) -> bool:
+    return (c >= 0x0E01 and c <= 0x0E4E) or c == 0x2060
+
+
+static func _is_thai_mark(c: int) -> bool:
+    return c == 0x0E31 or (c >= 0x0E34 and c <= 0x0E3A) or (c >= 0x0E47 and c <= 0x0E4E)
+
+
 static func title(text: String, size: int, col: Color, bold := true) -> Label:
     var l := Label.new()
     l.text = text

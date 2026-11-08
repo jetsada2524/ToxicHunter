@@ -224,17 +224,21 @@ func _line(text: String, r: Array, max_fs: int, col: Color, outline: Color,
 ## Wrapped text, shrunk until every line fits inside the rect.
 func _block(text: String, r: Array, max_fs: int, min_fs: int, col: Color, bold: bool,
         align := HORIZONTAL_ALIGNMENT_LEFT, valign := VERTICAL_ALIGNMENT_CENTER) -> Label:
-    var f := Ui.font(bold)
-    var fs := max_fs
-    while fs > min_fs:
-        var sz := f.get_multiline_string_size(text, align, r[2], fs, -1,
-            TextServer.BREAK_MANDATORY | TextServer.BREAK_WORD_BOUND | TextServer.BREAK_ADAPTIVE)
-        if sz.y <= r[3]:
-            break
-        fs -= 2
-    var l := _label(text, r, fs, col, bold, align, valign)
+    text = Ui.th(text)  # keep Thai loanwords on one line
+    var l := _label(text, r, max_fs, col, bold, align, valign)
     l.autowrap_mode = TextServer.AUTOWRAP_WORD_SMART
     l.clip_text = true
+    # _label() sized it while autowrap was still off, which stretched it to the
+    # whole text on one line; put the real box size back now that it wraps
+    l.size = Vector2(r[2], r[3])
+    # shrink until the Label itself shows every line (font-only measuring
+    # under-estimates Thai line height, which hid the second line before)
+    var fs := max_fs
+    while fs > min_fs and l.get_line_count() > l.get_visible_line_count():
+        fs -= 2
+        l.add_theme_font_size_override("font_size", fs)
+    if l.get_line_count() > l.get_visible_line_count():
+        l.clip_text = false  # never hide text: let it spill a little instead
     return l
 
 

@@ -74,7 +74,7 @@ func setup(lv: Dictionary, open: bool) -> void:
 	var secs := int(lv.get("time", 120))
 	_info.text = "🏠 %d ห้อง   ⚠ %d ชิ้น   ⏱ %d:%02d" % [
 		lv["rooms"].size(), lv["toxic"].size(), int(secs / 60.0), secs % 60]
-	_subtitle.text = lv.get("subtitle", "")
+	_subtitle.text = Ui.th(lv.get("subtitle", ""))
 
 	# start button
 	_button.color = accent

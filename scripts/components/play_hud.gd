@@ -41,6 +41,9 @@ const ARROW_SWAY := 12.0
 const PLAQUE_MAX_W := 250.0
 ## where to break long room names (add new long names here)
 const PLAQUE_SPLIT := {
+	"ห้องวิจัยและประกันคุณภาพ": "ห้องวิจัยและ\nประกันคุณภาพ",
+	"ห้องซ่อมบำรุงและสาธารณูปโภค": "ห้องซ่อมบำรุง\nและสาธารณูปโภค",
+	"ห้องเก็บของและสารเคมี": "ห้องเก็บของ\nและสารเคมี",
 	"โรงเรือนเก็บวัสดุและสารเคมี": "โรงเรือนเก็บวัสดุ\nและสารเคมี",
 	"โรงซ่อมบำรุงเครื่องจักรฟาร์ม": "โรงซ่อมบำรุง\nเครื่องจักรฟาร์ม",
 	"โรงเรือนเลี้ยงสัตว์": "โรงเรือน\nเลี้ยงสัตว์",
@@ -173,13 +176,13 @@ func _fit_plaque(l: Label, text: String) -> void:
 	elif PLAQUE_SPLIT.has(text):
 		l.text = PLAQUE_SPLIT[text]
 	elif text.contains(" "):
-		var mid := text.length() / 2
+		var mid := int(text.length() / 2.0)
 		var k := text.rfind(" ", mid)
 		if k < 0:
 			k = text.find(" ")
 		l.text = text.substr(0, k) + "\n" + text.substr(k + 1)
 	else:
-		l.text = text
+		l.text = Ui.th(text)
 		l.autowrap_mode = TextServer.AUTOWRAP_WORD_SMART
 		l.custom_minimum_size.x = ceilf(w * 0.6)
 

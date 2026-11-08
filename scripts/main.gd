@@ -122,6 +122,7 @@ func show_attach() -> void:
 func show_level_select() -> void:
     var s := LevelSelectScene.instantiate()
     s.level_chosen.connect(func(id: String): show_play(id))
+    s.back_pressed.connect(func(): show_attach())
     _swap(s)
     Music.play(&"title")
 

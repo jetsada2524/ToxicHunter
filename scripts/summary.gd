@@ -47,7 +47,7 @@ func _ready() -> void:
     _style_box(won)
     %TitleLabel.text = TITLE_WIN if won else TITLE_TRY
 
-    %BubbleLabel.text = BUBBLE_WIN if won else BUBBLE_TRY % [found, total]
+    %BubbleLabel.text = Ui.th(BUBBLE_WIN if won else BUBBLE_TRY % [found, total])
     _build_items()
     _build_score(result)
     _build_stars(Game.star_rating(result["score"]), result)
@@ -162,7 +162,7 @@ func _build_items() -> void:
             tick.size = Vector2(34, 34) * k
             badge.add_child(tick)
 
-        var nm := Ui.title(Items.get_item(e["id"]).get("name", e["id"]), int(24 * minf(1.0, k + 0.08)), Ui.INK)
+        var nm := Ui.title(Ui.th(Items.get_item(e["id"]).get("name", e["id"])), int(24 * minf(1.0, k + 0.08)), Ui.INK)
         nm.horizontal_alignment = HORIZONTAL_ALIGNMENT_CENTER
         nm.autowrap_mode = TextServer.AUTOWRAP_WORD_SMART
         col.add_child(nm)
